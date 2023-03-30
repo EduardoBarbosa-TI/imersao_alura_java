@@ -1,9 +1,6 @@
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
+
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -12,19 +9,27 @@ public class Main {
 
 
         String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
-        URI endereco = URI.create(url);
-        HttpClient client =  HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-        String body = response.body();
-        System.out.println(body);
 
-        JsonParser parser = new JsonParser();
-        List<Map<String, String>> listadeFilmes = parser.parse(body);
-        for (Map<String,String> Filme : listadeFilmes){
-            System.out.println(Filme.get("title"));
-            System.out.println(Filme.get("image"));
-            System.out.println(Filme.get("imDbRating"));
+        ClientHttp http =  new ClientHttp();
+        String json = http.buscaDados(url);
+
+
+
+        var geradora = new StickerFactory();
+        for (Map<String,String> conteudo : listaDeConteudos){
+
+            String urlImage = conteudo.get("image")
+                    .replaceAll("(@+)(.*).jpg$","$1.jpg");
+
+
+            InputStream inputStream = new URL(urlImage).openStream();
+            String nomeArquivo = titulo + ".png";
+
+
+            geradora.store(inputStream,nomeArquivo);
+
+
+            System.out.println(titulo);
             System.out.println();
         }
     }
