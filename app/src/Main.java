@@ -8,28 +8,30 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
 
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
+        String url = "https://api.nasa.gov/planetary/apod?api_key=pIX6OExsZKHtFTl5c9aCebgYMRUAXJNMDp14eMZz";
 
-        ClientHttp http =  new ClientHttp();
+        var http =  new ClientHttp();
         String json = http.buscaDados(url);
 
 
+        ExtratorDeConteudoDaNasa extrator = new ExtratorDeConteudoDaNasa();
+        List<Conteudo> conteudos = extrator.extraiConteudos(json);
+
 
         var geradora = new StickerFactory();
-        for (Map<String,String> conteudo : listaDeConteudos){
 
-            String urlImage = conteudo.get("image")
-                    .replaceAll("(@+)(.*).jpg$","$1.jpg");
+        for (int i = 0; i < 1; i++){
 
+            Conteudo conteudo =  conteudos.get(i);
 
-            InputStream inputStream = new URL(urlImage).openStream();
-            String nomeArquivo = titulo + ".png";
+            var inputStream = new URL(conteudo.getUrlImage()).openStream();
+            String nomeArquivo = conteudo.getTitulo() + ".png";
 
 
             geradora.store(inputStream,nomeArquivo);
 
 
-            System.out.println(titulo);
+            System.out.println(conteudo.getTitulo());
             System.out.println();
         }
     }
