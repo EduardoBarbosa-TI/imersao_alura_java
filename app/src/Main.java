@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
 
-        String url = "https://api.nasa.gov/planetary/apod?api_key=pIX6OExsZKHtFTl5c9aCebgYMRUAXJNMDp14eMZz";
+        String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=10";
 
         var http =  new ClientHttp();
         String json = http.buscaDados(url);
@@ -20,7 +20,7 @@ public class Main {
 
         var geradora = new StickerFactory();
 
-        for (int i = 0; i < 1; i++){
+        for (int i = 0; i < 10; i++){
 
             Conteudo conteudo =  conteudos.get(i);
 
