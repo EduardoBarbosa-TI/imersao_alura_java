@@ -10,17 +10,18 @@ public class Main {
 
         String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&count=10";
 
+
         var http =  new ClientHttp();
         String json = http.buscaDados(url);
 
 
-        ExtratorDeConteudoDaNasa extrator = new ExtratorDeConteudoDaNasa();
+        ExtratorDeConteudo extrator = new ExtratorDeConteudoDaNasa();
         List<Conteudo> conteudos = extrator.extraiConteudos(json);
 
 
         var geradora = new StickerFactory();
 
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 3; i++){
 
             Conteudo conteudo =  conteudos.get(i);
 
